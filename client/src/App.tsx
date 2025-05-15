@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import './App.css';
+
+import Leaderboard from './Components/Leaderboard.tsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [score, setScore] = useState<number>(0);
+  const [showLeaderboard, setShowLeaderboard] = useState<boolean>(false);
+
+  const handleClick = () => {
+    setScore(score + 1);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className='App'>
+      {showLeaderboard ?
+        (<Leaderboard setShowLeaderboard={setShowLeaderboard} />
+        
+        ) : (
+        <>
+          <div className='header'>
+            
+            <h1 className='firstname'>
+              <span id='firstname'>Имя</span>
+            </h1>
+
+          </div>
+          
+          <div className='content'>
+            <div className='score-container'>
+              
+              <h2 className='score'>
+                <span id='score'>{score}</span>
+              </h2>
+
+            </div>
+            
+            <div className='button-container'>
+              <button className='button-click' id='button-click' onClick={handleClick}>Нажми</button>
+            </div>
+
+          </div>
+          
+          <div className='footer'>
+            <button className='btn-leaderboard' id='btn-leaderboard' onClick={() => setShowLeaderboard(true)}>
+              <FontAwesomeIcon icon={faTrophy} />
+            </button>
+          </div>
+
+        </>
+        )}
+    </div>
+  );
 }
 
-export default App
+export default App;
