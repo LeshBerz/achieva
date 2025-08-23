@@ -1,7 +1,14 @@
+// {
+//   "url": "https://your-app-url.vercel.app",
+//   "name": "Achieva",
+//   "iconUrl": "https://your-app-url.vercel.app/icon.png",
+//   "termsOfUseUrl": "https://your-app-url.vercel.app/terms",
+//   "privacyPolicyUrl": "https://your-app-url.vercel.app/privacy"
+// }
 {
-  "url": "https://your-app-url.vercel.app",
+  "url": "http://localhost:5173",
   "name": "Achieva",
-  "iconUrl": "https://your-app-url.vercel.app/icon.png",
-  "termsOfUseUrl": "https://your-app-url.vercel.app/terms",
-  "privacyPolicyUrl": "https://your-app-url.vercel.app/privacy"
+  "iconUrl": "http://localhost:5173/icon.png",
+  "termsOfUseUrl": "http://localhost:5173/terms",
+  "privacyPolicyUrl": "http://localhost:5173/privacy"
 }

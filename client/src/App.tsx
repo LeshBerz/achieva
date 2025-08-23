@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { initTelegram } from './services/telegramService';
-import { TonProvider } from './services/tonService'; // Новый импорт
+import TonProvider from './services/tonService';
 import EventList from './components/EventList';
 import Rewards from './components/Rewards';
 

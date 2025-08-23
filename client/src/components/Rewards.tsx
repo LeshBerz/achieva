@@ -1,4 +1,5 @@
 import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
+import { useEffect, useState } from 'react';
 
 const Rewards: React.FC = () => {
   const [tonConnectUI] = useTonConnectUI();

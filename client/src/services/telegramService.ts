@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'; // Для хука, если нужно
-
 export const initTelegram = () => {
   if (window.Telegram?.WebApp) {
     const webApp = window.Telegram.WebApp;
