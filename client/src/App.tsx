@@ -1,56 +1,49 @@
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import './App.css';
-
-import Leaderboard from './Components/Leaderboard.tsx';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { initTelegram } from './services/telegramService';
+import { TonProvider } from './services/tonService'; // Новый импорт
+import EventList from './components/EventList';
+import Rewards from './components/Rewards';
 
 function App() {
-  const [score, setScore] = useState<number>(0);
-  const [showLeaderboard, setShowLeaderboard] = useState<boolean>(false);
-
-  const handleClick = () => {
-    setScore(score + 1);
-  };
+  useEffect(() => {
+    initTelegram();
+  }, []);
 
   return (
-    <div className='App'>
-      {showLeaderboard ?
-        (<Leaderboard setShowLeaderboard={setShowLeaderboard} />
-        
-        ) : (
-        <>
-          <div className='header'>
-            
-            <h1 className='firstname'>
-              <span id='firstname'>Имя</span>
-            </h1>
+    <TonProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/student" element={<StudentDashboard />} />
+            <Route path="/organizer" element={<OrganizerPanel />} />
+          </Routes>
+        </div>
+      </Router>
+    </TonProvider>
+  );
+}
 
-          </div>
-          
-          <div className='content'>
-            <div className='score-container'>
-              
-              <h2 className='score'>
-                <span id='score'>{score}</span>
-              </h2>
+function Home() {
+  return <h1 className="text-2xl font-bold text-center py-10">Добро пожаловать в Achieva!</h1>;
+}
 
-            </div>
-            
-            <div className='button-container'>
-              <button className='button-click' id='button-click' onClick={handleClick}>Нажми</button>
-            </div>
+function StudentDashboard() {
+  return (
+    <div className="p-4">
+      <h2>Дашборд студента</h2>
+      <EventList />
+      <Rewards />
+    </div>
+  );
+}
 
-          </div>
-          
-          <div className='footer'>
-            <button className='btn-leaderboard' id='btn-leaderboard' onClick={() => setShowLeaderboard(true)}>
-              <FontAwesomeIcon icon={faTrophy} />
-            </button>
-          </div>
-
-        </>
-        )}
+function OrganizerPanel() {
+  return (
+    <div className="p-4">
+      <h2>Панель организатора</h2>
+      {/* Здесь список участников, выдача токенов */}
     </div>
   );
 }
