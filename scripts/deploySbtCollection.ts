@@ -20,7 +20,7 @@ export async function run(provider: NetworkProvider) {
     itemCode,
   }, code));
 
-  await sbtCollection.sendDeploy(provider.sender(), toNano('0.05'));
+  await sbtCollection.sendDeploy(provider.sender(), toNano('0.05'), collectionContent, itemCode);
 
   console.log('Collection deployed at: ' + sbtCollection.address.toString());
 }

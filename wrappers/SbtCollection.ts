@@ -30,13 +30,15 @@ export class SbtCollection implements Contract {
     return new SbtCollection(contractAddress(workchain, init));
   }
 
-  async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
+  async sendDeploy(provider: ContractProvider, via: Sender, value: bigint, collectionContent: Cell, itemCode: Cell) {
     await provider.internal(via, {
       value,
       sendMode: SendMode.PAY_GAS_SEPARATELY,
       body: beginCell()
         .storeUint(0, 32)  // op = 0 (deploy)
         .storeUint(0, 64)
+        .storeRef(collectionContent)
+        .storeRef(itemCode)
         .endCell(),
     });
   }
