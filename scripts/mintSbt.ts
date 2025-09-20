@@ -3,7 +3,7 @@ import { SbtCollection } from '../wrappers/SbtCollection';
 import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
-  const collectionAddress = Address.parse('EQ...'); // адрес после деплоя
+  const collectionAddress = Address.parse('EQDF-enzpjaovPZxpRLHa1AQIJGn8_DPED-_3NZYck70kqTx'); // Адрес коллекции
 
   const sbtCollection = provider.open(SbtCollection.createFromAddress(collectionAddress));
 
@@ -11,7 +11,7 @@ export async function run(provider: NetworkProvider) {
     .storeStringTail(JSON.stringify({
       name: 'My SBT #1',
       description: 'My first soulbound token',
-      image: 'https://i.imgur.com/your-sbt-image.png',
+      image: 'https://raw.githubusercontent.com/diananiki/amely/main/amely.png',
     }))
     .endCell();
 

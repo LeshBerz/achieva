@@ -7,14 +7,17 @@ export async function run(provider: NetworkProvider) {
     .storeStringTail(JSON.stringify({
       name: 'My SBT Collection',
       description: 'Soulbound tokens collection',
-      image: 'https://i.imgur.com/your-collection-image.png',
+      image: 'https://raw.githubusercontent.com/diananiki/amely/main/amely.png',
     }))
     .endCell();
 
   const code = await compile('SbtCollection');
+  const itemCode = await compile('SbtItem');
+
   const sbtCollection = provider.open(await SbtCollection.createFromConfig({
     owner: provider.sender().address!,
     collectionContent,
+    itemCode,
   }, code));
 
   await sbtCollection.sendDeploy(provider.sender(), toNano('0.05'));

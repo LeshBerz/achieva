@@ -3,6 +3,7 @@ import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, 
 export type SbtCollectionConfig = {
   owner: Address;
   collectionContent: Cell;
+  itemCode: Cell;
 };
 
 export function sbtCollectionConfigToCell(config: SbtCollectionConfig): Cell {
@@ -11,6 +12,7 @@ export function sbtCollectionConfigToCell(config: SbtCollectionConfig): Cell {
     .storeRef(config.collectionContent)
     .storeAddress(config.owner)
     .storeAddress(config.owner)
+    .storeRef(config.itemCode)
     .endCell();
 }
 
@@ -28,14 +30,12 @@ export class SbtCollection implements Contract {
     return new SbtCollection(contractAddress(workchain, init));
   }
 
-  // === Messages ===
-
   async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
     await provider.internal(via, {
       value,
       sendMode: SendMode.PAY_GAS_SEPARATELY,
       body: beginCell()
-        .storeUint(0, 32) // op = 0 (deploy)
+        .storeUint(0, 32)  // op = 0 (deploy)
         .storeUint(0, 64)
         .endCell(),
     });
@@ -46,15 +46,13 @@ export class SbtCollection implements Contract {
       value,
       sendMode: SendMode.PAY_GAS_SEPARATELY,
       body: beginCell()
-        .storeUint(0x01, 32) // op = 1 (mint)
+        .storeUint(1, 32)  // op = 1 (mint)
         .storeUint(0, 64)
         .storeAddress(to)
         .storeRef(itemContent)
         .endCell(),
     });
   }
-
-  // === Getters ===
 
   async getCollectionData(provider: ContractProvider): Promise<[bigint, Cell, Address]> {
     const result = await provider.get('get_collection_data', []);
