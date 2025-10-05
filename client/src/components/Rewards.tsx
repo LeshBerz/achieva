@@ -1,34 +1,56 @@
 import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { IS_MOCK_MODE, mockTonConnectUI, mockTonWallet } from '../mocks';
 
 const Rewards: React.FC = () => {
-  const [tonConnectUI] = useTonConnectUI();
-  const wallet = useTonWallet();
-  const [rewards, setRewards] = useState<string[]>([]); // Массив токенов cSBT
+  let tonConnectUI;
+  let wallet;
+
+  if (IS_MOCK_MODE) {
+    tonConnectUI = mockTonConnectUI()[0]; // Прямой mock без хука
+    wallet = useMemo(() => mockTonWallet(), []); // Стабильный mock
+  } else {
+    [tonConnectUI] = useTonConnectUI(); // Реальные хуки только здесь
+    wallet = useTonWallet();
+  }
+
+  const [rewards, setRewards] = useState<string[]>([]);
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     if (wallet) {
-      // Заглушка: fetch баланса cSBT (в будущем: через TON Client или API)
       setRewards(['cSBT #1: Участие в лекции', 'cSBT #2: Победитель хакатона']);
+      setIsConnected(true);
     }
   }, [wallet]);
 
   const connectWallet = () => {
-    tonConnectUI.openModal();
+    if (IS_MOCK_MODE) {
+      console.log('Mock connect');
+      setRewards(['cSBT #1: Участие в лекции']);
+      setIsConnected(true);
+    } else {
+      tonConnectUI.openModal();
+    }
   };
 
   return (
-    <div className="p-4">
-      {!wallet ? (
-        <button onClick={connectWallet} className="bg-blue-500 text-white px-4 py-2 rounded">
-          Подключить TON Wallet
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+      {!isConnected ? (
+        <button 
+          onClick={connectWallet} 
+          className="bg-blue-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-700 hover:shadow-xl transition transform hover:scale-105 w-full md:w-auto"
+        >
+          Подключить TON Wallet (Mock)
         </button>
       ) : (
         <div>
-          <h3 className="text-lg font-bold">Ваши награды (cSBT):</h3>
-          <ul className="list-disc pl-5">
+          <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200">Ваши награды (cSBT):</h3>
+          <ul className="space-y-2">
             {rewards.map((reward, index) => (
-              <li key={index}>{reward}</li>
+              <li key={index} className="p-3 bg-gray-100 dark:bg-gray-700 rounded-md shadow-sm hover:shadow-md transition">
+                {reward}
+              </li>
             ))}
           </ul>
         </div>

@@ -1,35 +1,34 @@
 import { useTonConnectUI } from '@tonconnect/ui-react';
+import { IS_MOCK_MODE, mockTonConnectUI } from '../mocks';
 
 const IssueToken: React.FC<{ participantId: string }> = ({ participantId }) => {
-  const [tonConnectUI] = useTonConnectUI();
+  let tonConnectUI;
+  if (IS_MOCK_MODE) {
+    tonConnectUI = mockTonConnectUI()[0];
+  } else {
+    [tonConnectUI] = useTonConnectUI();
+  }
 
   const issueCSBT = async () => {
+    if (IS_MOCK_MODE) {
+      console.log(`Mock issuing cSBT to ${participantId}`);
+      alert('Mock: Токен выдан!');
+      return;
+    }
+
     if (!tonConnectUI.connected) {
       alert('Подключите wallet сначала');
       return;
     }
-    // Заглушка: реальная транзакция через tonConnectUI.sendTransaction({ ... })
-    // Параметры: to (контракт cSBT), value, payload для минтинга
-    try {
-      await tonConnectUI.sendTransaction({
-        validUntil: Math.floor(Date.now() / 1000) + 60 * 5, // 5 мин
-        messages: [
-          {
-            address: 'EQ... ', // Адрес контракта cSBT
-            amount: '1000000', // В наноTON
-            payload: 'base64 payload for mint' // Для минтинга токена участнику
-          }
-        ]
-      });
-      alert('Токен выдан!');
-    } catch (error) {
-      console.error('Ошибка выдачи:', error);
-    }
+    // Реальная транзакция...
   };
 
   return (
-    <button onClick={issueCSBT} className="bg-green-500 text-white px-4 py-2 rounded">
-      Выдать cSBT участнику {participantId}
+    <button 
+      onClick={issueCSBT} 
+      className="bg-green-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-green-700 hover:shadow-xl transition transform hover:scale-105"
+    >
+      Выдать cSBT участнику {participantId} (Mock)
     </button>
   );
 };

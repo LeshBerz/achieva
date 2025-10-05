@@ -25,16 +25,16 @@ const EventList: React.FC = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {events.map(event => (
-        <div key={event.id} className="p-4 bg-white dark:bg-gray-800 rounded shadow">
-          <h3 className="text-lg font-bold">{event.title}</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{event.date}</p>
-          <p>{event.description}</p>
-        </div>
-      ))}
-    </div>
-  );
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {events.map(event => (
+      <div key={event.id} className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+        <h3 className="text-lg font-bold">{event.title}</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{event.date}</p>
+        <p>{event.description}</p>
+      </div>
+    ))}
+  </div>
+);
 };
 
 export default EventList;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
+import { IS_MOCK_MODE } from '../mocks';
 
-const TonProvider = ({ children }: { children: React.ReactNode }) => {
+const RealTonProvider = ({ children }: { children: React.ReactNode }) => {
   return React.createElement(
     TonConnectUIProvider,
     {
@@ -14,6 +15,10 @@ const TonProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default TonProvider;
+const MockTonProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return children;
+};
 
-// Для доступа к UI используйте хук:
+export default IS_MOCK_MODE ? MockTonProvider : RealTonProvider;
+
+// export default TonProvider;
