@@ -1,6 +1,16 @@
 {
   "rewrites": [{ "source": "/webhook", "destination": "/api/webhook" }],
   "env": {
-    "TELEGRAM_BOT_TOKEN": "@telegram_bot_token"
-  }
+    "TELEGRAM_BOT_TOKEN": "TELEGRAM_BOT_TOKEN"
+  },
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ]
 }
