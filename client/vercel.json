@@ -1,0 +1,6 @@
+{
+  "rewrites": [{ "source": "/webhook", "destination": "/api/webhook" }],
+  "env": {
+    "TELEGRAM_BOT_TOKEN": "@telegram_bot_token"
+  }
+}
