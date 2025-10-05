@@ -1,8 +1,5 @@
 {
-  "rewrites": [{ "source": "/webhook", "destination": "/api/webhook" }],
-  "env": {
-    "TELEGRAM_BOT_TOKEN": "TELEGRAM_BOT_TOKEN"
-  },
+  "version": 2,
   "builds": [
     {
       "src": "index.html",
@@ -12,5 +9,18 @@
       "src": "api/**/*.js",
       "use": "@vercel/node"
     }
-  ]
+  ],
+  "routes": [
+    {
+      "src": "/webhook",
+      "dest": "/api/webhook"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "TELEGRAM_BOT_TOKEN": "TELEGRAM_BOT_TOKEN"
+  }
 }

@@ -6,7 +6,7 @@ export const mockTelegram = {
     ready: () => console.log('Mock Telegram ready'),
     expand: () => console.log('Mock expand'),
     colorScheme: 'light', // 'light' или 'dark' для тестирования
-    onEvent: (event: string, callback: () => void) => console.log(`Mock event: ${event}`),
+    // onEvent: (event: string, callback: () => void) => console.log(`Mock event: ${event}`),
     // Добавь больше методов по мере нужды
   },
 };
@@ -14,7 +14,7 @@ export const mockTelegram = {
 // Mock хуки для TON Connect
 export const mockTonConnectUI = () => [
   {
-    connected: false,
+    connected: true,
     openModal: () => console.log('Mock open TON modal'),
     sendTransaction: async (tx: any) => {
       console.log('Mock transaction sent:', tx);
@@ -26,6 +26,7 @@ export const mockTonConnectUI = () => [
 
 export const mockTonWallet = () => ({
   address: 'EQ_mock_wallet_address',
+  balance: '1000',
   // Добавь больше свойств
 });
 

@@ -1,9 +1,9 @@
-export const handleWebhook = (req: any, res: any) => {
-  const token = process.env.TELEGRAM_BOT_TOKEN || import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+export const handleWebhook = (_req: any, res: any) => {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
   if (!token) {
-    console.error('Telegram Bot Token is missing');
+    console.error('TELEGRAM_BOT_TOKEN is not set');
     return res.status(500).json({ error: 'Internal server error' });
   }
   console.log('Webhook received, token exists');
-  res.status(200).json({ status: 'ok' }); // Mock-ответ
+  res.status(200).json({ status: 'ok', tokenExists: !!token });
 };
