@@ -1,23 +1,27 @@
 export default function handler(req, res) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
+  // Устанавливаем CORS заголовки для работы с Telegram
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
-  if (!token) {
-    console.error('TELEGRAM_BOT_TOKEN is not set');
-    return res.status(500).json({ error: 'Internal server error' });
+  // Обработка preflight запросов
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
   }
   
-  console.log('Webhook received, token exists');
+  const token = process.env.TELEGRAM_BOT_TOKEN;
   
   // Обработка POST запросов от Telegram
   if (req.method === 'POST') {
     const update = req.body;
-    console.log('Received update:', update);
+    console.log('Received Telegram update:', JSON.stringify(update, null, 2));
     
     // Простая заглушка для начала
     return res.status(200).json({ 
       status: 'ok', 
       message: 'Webhook processed successfully',
-      updateId: update.update_id 
+      updateId: update.update_id,
+      tokenExists: !!token
     });
   }
   
@@ -25,8 +29,10 @@ export default function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(200).json({ 
       status: 'ok', 
-      message: 'Webhook endpoint is working',
-      tokenExists: !!token 
+      message: 'Achieva Webhook endpoint is working',
+      tokenExists: !!token,
+      timestamp: new Date().toISOString(),
+      project: 'Achieva - Telegram Mini App'
     });
   }
   
