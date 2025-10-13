@@ -21,6 +21,8 @@ export const initTelegram = async () => {
 
     if (!isInTelegram) {
       console.warn('Running outside Telegram - using mock environment');
+      
+      // Исправленные mock параметры с tgWebAppPlatform
       mockTelegramEnv({
         launchParams: new URLSearchParams({
           user: JSON.stringify({
@@ -37,6 +39,7 @@ export const initTelegram = async () => {
           start_param: 'debug',
           chat_type: 'sender',
           chat_instance: '8428209589180549439',
+          tgWebAppPlatform: 'web', // Добавляем недостающий параметр
         }).toString(),
       });
     }

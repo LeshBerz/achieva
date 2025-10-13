@@ -1,14 +1,7 @@
-// {
-//   "url": "https://your-app-url.vercel.app",
-//   "name": "Achieva",
-//   "iconUrl": "https://your-app-url.vercel.app/icon.png",
-//   "termsOfUseUrl": "https://your-app-url.vercel.app/terms",
-//   "privacyPolicyUrl": "https://your-app-url.vercel.app/privacy"
-// }
 {
-  "url": "http://localhost:5173",
+  "url": "https://achieva-wheat.vercel.app",
   "name": "Achieva",
-  "iconUrl": "http://localhost:5173/icon.png",
-  "termsOfUseUrl": "http://localhost:5173/terms",
-  "privacyPolicyUrl": "http://localhost:5173/privacy"
+  "iconUrl": "https://achieva-wheat.vercel.app/icon.png",
+  "termsOfUseUrl": "https://achieva-wheat.vercel.app/terms",
+  "privacyPolicyUrl": "https://achieva-wheat.vercel.app/privacy"
 }
