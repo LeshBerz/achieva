@@ -39,7 +39,16 @@ export const initTelegram = async () => {
           start_param: 'debug',
           chat_type: 'sender',
           chat_instance: '8428209589180549439',
-          tgWebAppPlatform: 'web', // Добавляем недостающий параметр
+          tgWebAppPlatform: 'web',
+          tgWebAppThemeParams: JSON.stringify({
+            bg_color: '#ffffff',
+            text_color: '#000000',
+            hint_color: '#999999',
+            link_color: '#2481cc',
+            button_color: '#2481cc',
+            button_text_color: '#ffffff',
+            secondary_bg_color: '#f1f1f1',
+          }),
         }).toString(),
       });
     }
