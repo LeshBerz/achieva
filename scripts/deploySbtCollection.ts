@@ -14,13 +14,18 @@ export async function run(provider: NetworkProvider) {
   const code = await compile('SbtCollection');
   const itemCode = await compile('SbtItem');
 
-  const sbtCollection = provider.open(await SbtCollection.createFromConfig({
+  const config = {
     owner: provider.sender().address!,
     collectionContent,
     itemCode,
-  }, code));
+  };
 
-  await sbtCollection.sendDeploy(provider.sender(), toNano('0.05'), collectionContent, itemCode);
+  const sbtCollection = await SbtCollection.sendDeploy(
+    provider.sender(),
+    toNano('0.05'),
+    config,
+    code,
+  );
 
   console.log('Collection deployed at: ' + sbtCollection.address.toString());
 }

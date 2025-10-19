@@ -64,7 +64,7 @@ fun mint(to: address, item_content: cell, sender: address) {
             .endCell()
     });
 
-    msg.send(SEND_MODE_PAY_FEES_SEPARATELY);  // Mode 1: платим газ отдельно
+    msg.send(SEND_MODE_PAY_FEES_SEPARATELY);
 }
 
 fun onInternalMessage(in: InMessage) {
@@ -84,7 +84,7 @@ fun onInternalMessage(in: InMessage) {
     }
 }
 
-get fun getNftAddressByIndex(index: int64): address {
+get fun get_nft_address_by_index(index: int64): address {
     var storage = lazy Storage.load();
 
     var item_data = beginCell()
@@ -104,7 +104,7 @@ get fun getNftAddressByIndex(index: int64): address {
     return address.fromValidBuilder(addr_builder);
 }
 
-get fun getCollectionData(): (int64, cell, address) {
+get fun get_collection_data(): (int64, cell, address) {
     var storage = lazy Storage.load();
     return (storage.next_item_index, storage.collection_content, storage.owner);
 }

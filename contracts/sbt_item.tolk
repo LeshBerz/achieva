@@ -22,11 +22,15 @@ fun init(body: slice, sender: address) {
     body.loadUint(32);  // Пропускаем op (0x01)
     body.loadUint(64);  // Пропускаем query_id
 
+    var to = body.loadAddress();
+
+    var item_content = body.loadRef();
+
     var storage = Storage {
         index: index,
         collection: sender,
-        owner: body.loadAddress(),
-        content: body.loadRef()
+        owner: to,
+        content: item_content
     };
     Storage.save(storage);
 }
@@ -59,12 +63,18 @@ fun onInternalMessage(in: InMessage) {
     }
 }
 
-get fun getNftData(): (int64, address, cell) {
+get fun get_nft_data(): (int, cell, address, address, cell) {
     var storage = lazy Storage.load();
-    return (storage.index, storage.owner, storage.content);
+    return (
+        0,
+        beginCell().storeInt(storage.index, 64).endCell(),
+        storage.collection,
+        storage.owner,
+        storage.content
+    );
 }
 
-get fun getOwner(): address {
+get fun get_owner(): address {
     var storage = lazy Storage.load();
     return storage.owner;
 }

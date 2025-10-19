@@ -3,7 +3,7 @@ import { SbtCollection } from '../wrappers/SbtCollection';
 import { NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
-  const collectionAddress = Address.parse('EQDF-enzpjaovPZxpRLHa1AQIJGn8_DPED-_3NZYck70kqTx'); // Адрес коллекции
+  const collectionAddress = Address.parse('EQC6FsffoI9Bd98C6je24LWyVvQWeQvju2tvkKhTHfVzGBzO'); // Адрес коллекции
 
   const sbtCollection = provider.open(SbtCollection.createFromAddress(collectionAddress));
 
@@ -17,7 +17,7 @@ export async function run(provider: NetworkProvider) {
 
   await sbtCollection.sendMint(
     provider.sender(),
-    toNano('0.05'),
+    toNano('0.005'),
     provider.sender().address!,
     itemContent,
   );

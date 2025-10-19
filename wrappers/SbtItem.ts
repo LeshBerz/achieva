@@ -40,10 +40,12 @@ export class SbtItem implements Contract {
     });
   }
 
-  async getNftData(provider: ContractProvider): Promise<[bigint, Address, Cell]> {
+  async getNftData(provider: ContractProvider): Promise<[number, Cell, Address, Address, Cell]> {
     const result = await provider.get('get_nft_data', []);
     return [
-      result.stack.readBigNumber(),
+      result.stack.readNumber(),
+      result.stack.readCell(),
+      result.stack.readAddress(),
       result.stack.readAddress(),
       result.stack.readCell(),
     ];
