@@ -5,11 +5,12 @@ import { IS_MOCK_MODE } from '../../../shared/config/mocks';
 export class IssueTokenVM {
   isLoading = false;
   isIssued = false;
+  private rootStore: RootStore;
+  private participantId: string;
 
-  constructor(
-    private rootStore: RootStore,
-    private participantId: string
-  ) {
+  constructor(rootStore: RootStore, participantId: string) {
+    this.rootStore = rootStore;
+    this.participantId = participantId;
     makeAutoObservable(this);
   }
 

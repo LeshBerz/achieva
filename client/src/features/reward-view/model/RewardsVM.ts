@@ -3,7 +3,10 @@ import { RootStore } from '../../../app/store/RootStore';
 import { IS_MOCK_MODE } from '../../../shared/config/mocks';
 
 export class RewardsVM {
-  constructor(private rootStore: RootStore) {
+  private rootStore: RootStore;
+
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeAutoObservable(this);
     if (IS_MOCK_MODE) {
       this.loadMockRewards();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Box, Typography, Button, List, ListItem, Paper, CircularProgress } from '@mui/material';
+import { Box, Typography, Button, List, ListItem, Paper } from '@mui/material';
 import { EmojiEvents } from '@mui/icons-material';
 import { RewardsVM } from '../model/RewardsVM';
 import './Rewards.scss';

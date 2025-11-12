@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Box, AppBar, Toolbar, Typography, Container, Button, IconButton } from '@mui/material';
+import { Box, AppBar, Toolbar, Typography, Container, Button } from '@mui/material';
 import { Home, Person, Business } from '@mui/icons-material';
 import './Layout.scss';
 

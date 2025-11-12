@@ -2,7 +2,10 @@ import { makeAutoObservable } from 'mobx';
 import { RootStore } from '../../../app/store/RootStore';
 
 export class ParticipantsListVM {
-  constructor(private rootStore: RootStore) {
+  private rootStore: RootStore;
+
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeAutoObservable(this);
     this.loadParticipants();
   }
@@ -35,7 +38,7 @@ export class ParticipantsListVM {
     this.rootStore.participantStore.setSortBy(field);
   }
 
-  handleViewParticipant(participantId: string, name: string, rewardsCount: number, engagementScore: number) {
+  handleViewParticipant(_participantId: string, name: string, rewardsCount: number, engagementScore: number) {
     const message = `Участник: ${name}\nНаград: ${rewardsCount}\nВовлеченность: ${engagementScore}%`;
     if (window.Telegram?.WebApp) {
       window.Telegram.WebApp.showAlert(message);

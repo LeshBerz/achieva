@@ -6,8 +6,10 @@ import { IssueTokenVM } from '../../../../features/reward-issue/model/IssueToken
 export class OrganizerDashboardVM {
   participantsListVM: ParticipantsListVM;
   issueTokenVMs: Map<string, IssueTokenVM> = new Map();
+  rootStore: RootStore;
 
-  constructor(private rootStore: RootStore) {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeAutoObservable(this);
     this.participantsListVM = new ParticipantsListVM(rootStore);
     this.initializeIssueTokenVMs();

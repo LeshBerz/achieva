@@ -1,9 +1,12 @@
 import { makeAutoObservable } from 'mobx';
 import { RootStore } from '../../../app/store/RootStore';
-import { Event } from '../../../entities/event/model/EventStore';
+import type { Event } from '../../../entities/event/model/EventStore';
 
 export class EventListVM {
-  constructor(private rootStore: RootStore) {
+  private rootStore: RootStore;
+
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeAutoObservable(this);
     this.loadEvents();
   }
