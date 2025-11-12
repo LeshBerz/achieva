@@ -1,0 +1,12 @@
+@import '../../../../shared/styles/variables';
+@import '../../../../shared/styles/mixins';
+
+.organizer-panel {
+  @include fade-in;
+}
+
+.panel-section {
+  @include card;
+  padding: $spacing-lg;
+}
+

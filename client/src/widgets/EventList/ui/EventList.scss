@@ -1,0 +1,17 @@
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+.event-list {
+  margin-top: $spacing-md;
+}
+
+.event-card {
+  @include card;
+  @include hover-scale;
+  height: 100%;
+  
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+}
+

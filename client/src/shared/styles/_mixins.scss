@@ -1,0 +1,34 @@
+@mixin fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin card {
+  background-color: $bg-card-light;
+  border-radius: 12px;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+  
+  .dark & {
+    background-color: $bg-card-dark;
+  }
+}
+
+@mixin hover-scale {
+  transition: transform $transition-normal;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+

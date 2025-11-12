@@ -1,19 +1,5 @@
 import { mockTelegramEnv } from '@telegram-apps/bridge';
 
-// Объявляем тип для window.Telegram
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp: {
-        ready: () => void;
-        expand: () => void;
-        colorScheme: string;
-        onEvent: (event: string, callback: () => void) => void;
-      };
-    };
-  }
-}
-
 export const initTelegram = async () => {
   try {
     // Простая проверка наличия Telegram WebApp

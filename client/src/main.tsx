@@ -29,7 +29,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import './index.css';
+import './shared/styles/main.scss';
 import { initTelegram } from './services/telegramService'; // Импорт
 
 // Инициализируем Telegram перед рендером

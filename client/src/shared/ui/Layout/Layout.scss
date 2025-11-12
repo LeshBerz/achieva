@@ -1,0 +1,35 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $bg-light 0%, #e3f2fd 100%);
+  
+  .dark & {
+    background: linear-gradient(135deg, $bg-dark 0%, #0d47a1 100%);
+  }
+}
+
+.layout-header {
+  box-shadow: $shadow-md;
+}
+
+.layout-main {
+  flex: 1;
+  padding: $spacing-lg;
+  
+  @media (min-width: 768px) {
+    padding: $spacing-xl;
+  }
+}
+
+.layout-footer {
+  background-color: $primary-color;
+  color: white;
+  padding: $spacing-md;
+  margin-top: auto;
+  box-shadow: $shadow-md;
+}
+

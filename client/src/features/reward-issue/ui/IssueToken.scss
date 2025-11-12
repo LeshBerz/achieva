@@ -1,0 +1,7 @@
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+.issue-token-button {
+  @include hover-scale;
+}
+

@@ -1,0 +1,14 @@
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+.home-page {
+  @include card;
+  @include fade-in;
+  padding: $spacing-xl;
+}
+
+.home-button {
+  @include hover-scale;
+  min-width: 200px;
+}
+

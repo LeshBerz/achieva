@@ -1,0 +1,12 @@
+@import '../../../../shared/styles/variables';
+@import '../../../../shared/styles/mixins';
+
+.student-dashboard {
+  @include fade-in;
+}
+
+.dashboard-section {
+  @include card;
+  padding: $spacing-lg;
+}
+
