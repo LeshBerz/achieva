@@ -16,9 +16,13 @@ export class AuthStore {
   user: User | null = null;
   isAuthenticated = false;
   isLoading = false;
+  private _rootStore: RootStore;
 
-  constructor(private rootStore: RootStore) {
+  constructor(rootStore: RootStore) {
+    this._rootStore = rootStore;
     makeAutoObservable(this);
+    // Reserved for future use (accessing other stores)
+    void this._rootStore;
   }
 
   setUser(user: User) {

@@ -16,9 +16,13 @@ export class EventStore {
   events: Event[] = [];
   isLoading = false;
   selectedEvent: Event | null = null;
+  private _rootStore: RootStore;
 
-  constructor(private rootStore: RootStore) {
+  constructor(rootStore: RootStore) {
+    this._rootStore = rootStore;
     makeAutoObservable(this);
+    // Reserved for future use (accessing other stores)
+    void this._rootStore;
   }
 
   setEvents(events: Event[]) {

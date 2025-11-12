@@ -14,9 +14,13 @@ export class ParticipantStore {
   isLoading = false;
   sortBy: 'rewardsCount' | 'engagementScore' = 'engagementScore';
   sortAsc = true;
+  private _rootStore: RootStore;
 
-  constructor(private rootStore: RootStore) {
+  constructor(rootStore: RootStore) {
+    this._rootStore = rootStore;
     makeAutoObservable(this);
+    // Reserved for future use (accessing other stores)
+    void this._rootStore;
   }
 
   setParticipants(participants: Participant[]) {
