@@ -1,4 +1,5 @@
 import "@stdlib/common";
+import "constants";
 
 struct Storage {
     index: int64;
@@ -27,7 +28,7 @@ fun init(body: slice, sender: address) {
     var item_content = body.loadRef();
 
     if (collection_addr != sender) {
-        throw(403);
+        throw(ERROR_FORBIDDEN);
     }
 
     var storage = Storage {
@@ -42,19 +43,15 @@ fun init(body: slice, sender: address) {
     Storage.save(storage);
 }
 
-fun transfer(sender: address) {
-    throw(405);
-}
-
 fun prove_ownership(query_id: int64, dest: address, forward_payload: cell, with_content: bool, sender: address) {
     var storage = lazy Storage.load();
 
     if (sender != storage.owner) {
-        throw(403);
+        throw(ERROR_FORBIDDEN);
     }
 
     var msg_body = beginCell()
-        .storeUint(0x0524c7ae, 32)
+        .storeUint(OP_OWNERSHIP_PROOF, 32)
         .storeUint(query_id, 64)
         .storeUint(storage.index, 256)
         .storeAddress(storage.owner)
@@ -82,7 +79,7 @@ fun request_owner(query_id: int64, dest: address, forward_payload: cell, with_co
     var storage = lazy Storage.load();
 
     var msg_body = beginCell()
-        .storeUint(0x0dd607e3, 32)
+        .storeUint(OP_OWNER_INFO, 32)
         .storeUint(query_id, 64)
         .storeUint(storage.index, 256)
         .storeAddress(sender)
@@ -110,7 +107,7 @@ fun request_owner(query_id: int64, dest: address, forward_payload: cell, with_co
 fun destroy(query_id: int64, sender: address) {
     var storage = lazy Storage.load();
     if (sender != storage.owner) {
-        throw(403);
+        throw(ERROR_FORBIDDEN);
     }
 
     storage.owner = createAddressNone();
@@ -118,7 +115,7 @@ fun destroy(query_id: int64, sender: address) {
     Storage.save(storage);
 
     var msg_body = beginCell()
-        .storeUint(0xd53276db, 32)
+        .storeUint(OP_EXCESSES, 32)
         .storeUint(query_id, 64)
         .endCell();
 
@@ -135,10 +132,10 @@ fun destroy(query_id: int64, sender: address) {
 fun revoke(query_id: int64, sender: address) {
     var storage = lazy Storage.load();
     if (sender != storage.authority) {
-        throw(403);
+        throw(ERROR_FORBIDDEN);
     }
     if (storage.revoked_at > 0) {
-        throw(403);
+        throw(ERROR_CONFLICT);
     }
 
     storage.revoked_at = blockchain.now();
@@ -146,31 +143,53 @@ fun revoke(query_id: int64, sender: address) {
     Storage.save(storage);
 }
 
+fun get_static_data(query_id: int64, sender: address) {
+    var storage = lazy Storage.load();
+
+    var msg_body = beginCell()
+        .storeUint(OP_REPORT_STATIC_DATA, 32)
+        .storeUint(query_id, 64)
+        .storeUint(storage.index, 256)
+        .storeAddress(storage.collection)
+        .endCell();
+
+    var msg = createMessage({
+        bounce: false,
+        value: 0,
+        dest: sender,
+        body: msg_body
+    });
+
+    msg.send(SEND_MODE_CARRY_ALL_REMAINING_MESSAGE_VALUE);
+}
+
 fun onInternalMessage(in: InMessage) {
     var cs = in.body;
     var op = cs.loadUint(32);
     var query_id = cs.loadUint(64);
 
-    if (op == 0x01) { // init
+    if (op == OP_INIT) {
         init(cs, in.senderAddress);
-    } else if (op == 0x5fcc3d14) { // transfer
-        transfer(in.senderAddress);
-    } else if (op == 0x04ded148) { // prove_ownership
+    } else if (op == OP_TRANSFER) {
+        throw(ERROR_METHOD_NOT_ALLOWED);
+    } else if (op == OP_PROVE_OWNERSHIP) {
         var dest = cs.loadAddress();
         var forward_payload = cs.loadRef();
         var with_content = cs.loadBool();
         prove_ownership(query_id, dest, forward_payload, with_content, in.senderAddress);
-    } else if (op == 0xd0c3bfea) { // request_owner
+    } else if (op == OP_REQUEST_OWNER) {
         var dest = cs.loadAddress();
         var forward_payload = cs.loadRef();
         var with_content = cs.loadBool();
         request_owner(query_id, dest, forward_payload, with_content, in.senderAddress);
-    } else if (op == 0x1f04537a) { // destroy
+    } else if (op == OP_DESTROY) {
         destroy(query_id, in.senderAddress);
-    } else if (op == 0x6f89f5e3) { // revoke
+    } else if (op == OP_REVOKE) {
         revoke(query_id, in.senderAddress);
+    } else if (op == OP_GET_STATIC_DATA) {
+        get_static_data(query_id, in.senderAddress);
     } else {
-        throw(404);
+        throw(ERROR_NOT_FOUND);
     }
 }
 
@@ -188,11 +207,6 @@ get fun get_authority_address(): address {
 get fun get_revoked_time(): int {
     var storage = lazy Storage.load();
     return storage.revoked_at as int;
-}
-
-get fun get_static_data_info(): (int, address) {
-    var storage = lazy Storage.load();
-    return (storage.index as int, storage.collection);
 }
 
 get fun get_owner(): address {

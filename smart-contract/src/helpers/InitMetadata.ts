@@ -2,7 +2,7 @@ import path from 'path';
 
 import { updateMetadataFiles, uploadFolderToIPFS, updateEnvFile } from '../utils';
 
-const _path = [__dirname, '..',  '..'];
+const _path = [__dirname, '..', '..', '..'];
 
 async function init() {
   const metadataFolderPath = path.resolve(..._path, 'data', 'metadata');

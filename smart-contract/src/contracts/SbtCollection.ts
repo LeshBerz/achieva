@@ -1,5 +1,7 @@
-import { TonClient } from '@ton/ton';
+import fs from 'fs';
+import path from 'path';
 
+import { TonClient } from '@ton/ton';
 import {
   Address,
   Cell,
@@ -9,8 +11,6 @@ import {
   SendMode,
   StateInit,
 } from '@ton/core';
-import fs from 'fs';
-import path from 'path';
 
 import { encodeOffChainContent, OpenedWallet } from '../utils';
 
@@ -30,10 +30,17 @@ const ITEM_PATH = './src/utils/boc/sbt_item.boc';
 export class SbtCollection {
   private data: SbtCollectionData;
   readonly testnet: boolean;
+  readonly client: TonClient;
 
   constructor(data: SbtCollectionData, testnet: boolean) {
     this.data = data;
     this.testnet = testnet;
+    this.client = new TonClient({
+      endpoint: this.testnet
+        ? 'https://testnet.toncenter.com/api/v2/jsonRPC'
+        : 'https://toncenter.com/api/v2/jsonRPC',
+      apiKey: process.env.TONCENTER_API_KEY,
+    });
   }
 
   private createCodeCell(_path: string): Cell {
@@ -114,14 +121,7 @@ export class SbtCollection {
     collectionContent: Cell;
     owner: Address;
   }> {
-    const client = new TonClient({
-      endpoint: this.testnet
-        ? 'https://testnet.toncenter.com/api/v2/jsonRPC'
-        : 'https://toncenter.com/api/v2/jsonRPC',
-      apiKey: process.env.TONCENTER_API_KEY,
-    });
-
-    const response = await client.runMethod(
+    const response = await this.client.runMethod(
       this.address,
       'get_collection_data',
     );
@@ -134,14 +134,7 @@ export class SbtCollection {
   }
 
   public async getNftAddressByIndex(index: number): Promise<Address> {
-    const client = new TonClient({
-      endpoint: this.testnet
-        ? 'https://testnet.toncenter.com/api/v2/jsonRPC'
-        : 'https://toncenter.com/api/v2/jsonRPC',
-      apiKey: process.env.TONCENTER_API_KEY,
-    });
-
-    const response = await client.runMethod(
+    const response = await this.client.runMethod(
       this.address,
       'get_nft_address_by_index',
       [{ type: 'int', value: BigInt(index) }],
@@ -154,14 +147,7 @@ export class SbtCollection {
     itemIndex: number,
     individualContent: Cell,
   ): Promise<Cell> {
-    const client = new TonClient({
-      endpoint: this.testnet
-        ? 'https://testnet.toncenter.com/api/v2/jsonRPC'
-        : 'https://toncenter.com/api/v2/jsonRPC',
-      apiKey: process.env.TONCENTER_API_KEY,
-    });
-
-    const response = await client.runMethod(
+    const response = await this.client.runMethod(
       this.address,
       'get_nft_content',
       [

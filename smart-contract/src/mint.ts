@@ -9,7 +9,7 @@ import { SbtItem } from './contracts/SbtItem';
 
 dotenv.config();
 
-const _path = [__dirname, '..'];
+const _path = [__dirname, '..', '..'];
 export const TESTNET = Boolean(process.env.TESTNET);
 
 async function mint() {

@@ -31,6 +31,8 @@
 
 ### 5. Final
 
-Радоваться, если получилось как [тут](https://testnet.tonviewer.com/kQABbX2sE5c01BIQkBtcqDaQ65xqDAbsmFFf8xrOQ_hf_upF?section=overview) 
+Радоваться, если получилось как [тут](https://testnet.tonviewer.com/kQDAo62bFutQGzu9k7VBAt1R6gEqvUyZhN3uRlTHB1MKM6kr?section=overview) 
 
 _Для минта на 5 разных адресов нужно 5 раз запустить скрипт `items mint`, каждый раз меняя `RECIPIENT_ADDRESS` в .env_
+
+_Для минта 5 item-ов на 1 адрес нужно 1 раз запустить скрипт `items mint` с параметром `SBT_QUANTITY=5`_

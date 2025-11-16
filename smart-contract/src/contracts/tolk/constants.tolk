@@ -1,0 +1,19 @@
+const OP_DEPLOY = 0;
+const OP_MINT = 1;
+
+const OP_INIT = 0x01;
+const OP_TRANSFER = 0x5fcc3d14;
+const OP_PROVE_OWNERSHIP = 0x04ded148;
+const OP_OWNERSHIP_PROOF = 0x0524c7ae;
+const OP_REQUEST_OWNER = 0xd0c3bfea;
+const OP_OWNER_INFO = 0x0dd607e3;
+const OP_DESTROY = 0x1f04537a;
+const OP_EXCESSES = 0xd53276db;
+const OP_REVOKE = 0x6f89f5e3;
+const OP_GET_STATIC_DATA = 0x2fcb26a2;
+const OP_REPORT_STATIC_DATA = 0x8b771735;
+
+const ERROR_FORBIDDEN = 403;
+const ERROR_METHOD_NOT_ALLOWED = 405;
+const ERROR_NOT_FOUND = 404;
+const ERROR_CONFLICT = 409;

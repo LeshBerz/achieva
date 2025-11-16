@@ -6,13 +6,12 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json",
     "prebuild": "rimraf dist",
-    "collection deploy": "tsc --skipLibCheck && node dist/deploy.js",
-    "items mint": "tsc --skipLibCheck && node dist/mint.js",
-    "gen metadata": "tsc --skipLibCheck && node dist/helpers/InitMetadata.js",
-    "gen boc": "tsc --skipLibCheck && node dist/helpers/buildBoc.js",
-
-    "test getters": "tsc --skipLibCheck && node dist/getters.test.js",
-    "test sbt actions": "tsc --skipLibCheck && node dist/sbtActions.test.js"
+    "collection deploy": "tsc --skipLibCheck && node dist/src/deploy.js",
+    "items mint": "tsc --skipLibCheck && node dist/src/mint.js",
+    "gen metadata": "tsc --skipLibCheck && node dist/src/helpers/InitMetadata.js",
+    "gen boc": "tsc --skipLibCheck && node dist/src/helpers/buildBoc.js",
+    "test getters": "tsc --skipLibCheck && node dist/test/getters.test.js",
+    "test sbt actions": "tsc --skipLibCheck && node dist/test/sbtActions.test.js"
   },
   "devDependencies": {
     "@types/node": "24.10.0",

@@ -1,4 +1,5 @@
 import "@stdlib/common";
+import "constants";
 
 struct Storage {
     owner: address;
@@ -33,7 +34,7 @@ fun mint(to: address, item_content: cell, authority: address, sender: address) {
     var storage = lazy Storage.load();
 
     if (sender != storage.owner) {
-        throw(403);
+        throw(ERROR_FORBIDDEN);
     }
 
     var item_index = storage.next_item_index;
@@ -57,7 +58,7 @@ fun mint(to: address, item_content: cell, authority: address, sender: address) {
             stateInit: state_init
         },
         body: beginCell()
-            .storeUint(0x01, 32)
+            .storeUint(OP_INIT, 32)
             .storeUint(0, 64)
             .storeAddress(contract.getAddress())
             .storeAddress(to)
@@ -66,22 +67,22 @@ fun mint(to: address, item_content: cell, authority: address, sender: address) {
             .endCell()
     });
 
-    msg.send(0);
+    msg.send(SEND_MODE_CARRY_ALL_REMAINING_MESSAGE_VALUE);
 }
 
 fun onInternalMessage(in: InMessage) {
     var cs = in.body;
     var op = cs.loadUint(32);
 
-    if (op == 0) {
+    if (op == OP_DEPLOY) {
         deploy(cs, in.senderAddress);
-    } else if (op == 1) {
+    } else if (op == OP_MINT) {
         var to = cs.loadAddress();
         var authority = cs.loadAddress();
         var item_content = cs.loadRef();
         mint(to, item_content, authority, in.senderAddress);
     } else {
-        throw(404);
+        throw(ERROR_NOT_FOUND);
     }
 }
 
