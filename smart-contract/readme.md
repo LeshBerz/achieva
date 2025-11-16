@@ -11,19 +11,7 @@
 
 ### 1. Settings
 
-Заполнить файл .env, опираясь на пример:
-
-```bash
-PINATA_API_KEY=
-PINATA_API_SECRET=
-MNEMONIC=секретная фраза кошелька 5 версии, на котором достаточно баланса для запуска контракта 
-TONCENTER_API_KEY=
-METADATA_IPFS_HASH=появится автоматически
-TESTNET=true
-RECIPIENT_ADDRESS=адрес, куда полетят item-ы
-SBT_CURRENT_INDEX=0
-SBT_QUANTITY=1 - количество item-ов, которые заминтятся за один раз на RECIPIENT_ADDRESS
-```
+Заполнить файл .env, опираясь на пример
 
 - Зарегистрироваться в pinata: https://pinata.cloud/
 - Зарегистрироваться в toncenter: https://toncenter.com/

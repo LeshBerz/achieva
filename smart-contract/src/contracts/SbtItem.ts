@@ -35,7 +35,7 @@ export class SbtItem {
   public async getAddressByIndex(
     collectionAddress: Address,
     itemIndex: number,
-  ): Promise<Address> {
+  ): Promise<Address | null> {
     const client = new TonClient({
       endpoint: this.collection.testnet
         ? 'https://testnet.toncenter.com/api/v2/jsonRPC'
@@ -49,14 +49,14 @@ export class SbtItem {
       [{ type: 'int', value: BigInt(itemIndex) }],
     );
 
-    return response.stack.readAddress();
+    return response.stack.readAddressOpt();
   }
 
   public async getNftData(itemAddress: Address): Promise<{
     isInitialized: boolean;
     index: number;
     collection: Address;
-    owner: Address;
+    owner: Address | null;
     content: Cell;
   }> {
     const client = new TonClient({
@@ -75,12 +75,12 @@ export class SbtItem {
       isInitialized: response.stack.readNumber() === 1,
       index: response.stack.readNumber(),
       collection: response.stack.readAddress(),
-      owner: response.stack.readAddress(),
+      owner: response.stack.readAddressOpt(),
       content: response.stack.readCell(),
     };
   }
 
-  public async getAuthorityAddress(itemAddress: Address): Promise<Address> {
+  public async getAuthorityAddress(itemAddress: Address): Promise<Address | null> {
     const client = new TonClient({
       endpoint: this.collection.testnet
         ? 'https://testnet.toncenter.com/api/v2/jsonRPC'
@@ -93,7 +93,7 @@ export class SbtItem {
       'get_authority_address',
     );
 
-    return response.stack.readAddress();
+    return response.stack.readAddressOpt();
   }
 
   public async getRevokedTime(itemAddress: Address): Promise<number> {

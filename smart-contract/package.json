@@ -9,20 +9,20 @@
     "collection deploy": "tsc --skipLibCheck && node dist/deploy.js",
     "items mint": "tsc --skipLibCheck && node dist/mint.js",
     "gen metadata": "tsc --skipLibCheck && node dist/helpers/InitMetadata.js",
-    "gen boc": "tsc --skipLibCheck && node dist/helpers/buildBoc.js"
+    "gen boc": "tsc --skipLibCheck && node dist/helpers/buildBoc.js",
+
+    "test getters": "tsc --skipLibCheck && node dist/getters.test.js",
+    "test sbt actions": "tsc --skipLibCheck && node dist/sbtActions.test.js"
   },
   "devDependencies": {
-    "@types/node": "^24.10.0",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "@pinata/sdk": "^2.1.0",
-    "@ton/core": "^0.62.0",
-    "@ton/crypto": "^3.3.0",
-    "@ton/tolk-js": "^1.1.0",
-    "@ton/ton": "^16.0.0",
-    "buffer": "^6.0.3",
-    "dotenv": "^17.2.3",
-    "rimraf": "^6.1.0"
+    "@types/node": "24.10.0",
+    "typescript": "5.9.3",
+    "@pinata/sdk": "2.1.0",
+    "@ton/core": "0.62.0",
+    "@ton/crypto": "3.3.0",
+    "@ton/tolk-js": "1.1.0",
+    "@ton/ton": "16.0.0",
+    "dotenv": "17.2.3",
+    "rimraf": "6.1.0"
   }
 }
